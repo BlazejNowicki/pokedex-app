@@ -1,36 +1,32 @@
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { getTypes } from "../../api/wrappers";
 import { ListItem } from "../../components/list-item/listItem";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { getIndexes, getIndexesByName, getIndexesByType, loadListAsync, selectPokemonList } from "../../store/pokemonSlice";
+import { loadListAsync, selectConfig, selectPokemonList, selectRequestStatus } from "../../store/pokemonSlice";
 import { DisplayMode } from "../../types/displayTypes";
 
 export const ListView = () => {
     const list = useAppSelector(selectPokemonList);
+    const status = useAppSelector(selectRequestStatus);
+    const config = useAppSelector(selectConfig);
     const dispatch = useAppDispatch();
 
-    const fun = async () => {
-        let val = await getIndexesByType('flying', 10);
-        console.log(val);
-    }
-
     useEffect(() => {
-        dispatch(loadListAsync({mode: DisplayMode.Type, typeName: 'flying'}));
+        dispatch(loadListAsync({mode: DisplayMode.Name, query: 'butter', size: config.size}));
     }, []);
 
-    const items = list.map(data => <ListItem data={data} key={data.id}/>);
 
     const handleLoadMore = () => {
-        dispatch(loadListAsync({mode: DisplayMode.Normal}));
+        dispatch(loadListAsync({...config, size: config.size+10}));
     }
 
-    
+    const items = list.map(data => <ListItem data={data} key={data.id} />);
 
     return (
         <div>
             <h3>ListView</h3>
-            <button onClick={handleLoadMore}>Load more</button>
             {items}
+            <button onClick={handleLoadMore}>Load more</button>
         </div>
     );
 }

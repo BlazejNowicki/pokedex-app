@@ -8,7 +8,7 @@ export const getPokemonInRange = (limit: number, offset: number) => {
     return http.get(`pokemon?limit=${limit}&offset=${offset}`);
 }
 
-export const getPokemonTypes = (limit: number, offset: number) => {
+export const getPokemonTypes = () => {
     return http.get('type');
 }
 

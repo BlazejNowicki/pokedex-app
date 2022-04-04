@@ -1,17 +1,20 @@
-import { Button, Col, Container, Row } from "react-bootstrap";
+import Button from "react-bootstrap/Button"
+import Col from "react-bootstrap/Col"
+import Container from "react-bootstrap/Container"
+import Row from "react-bootstrap/Row"
 import { Link, useParams } from "react-router-dom";
-import { useAppSelector } from "../../store/hooks";
-import { selectPokemonById } from "../../store/pokemonSlice";
+import { useAppSelector } from "../store/hooks";
+import { selectPokemonById } from "../store/pokemonSlice";
 
 export const DetailsView = () => {
     let params = useParams();
     let pokemon = useAppSelector(selectPokemonById(params.id ? parseInt(params.id) : 1));
 
     return (
-        <Container className="bg-light p-3 rounded-3">
+        <Container className="bg-light p-3 rounded-3 shadow-lg">
             <Row>
                 <Col md='6' className="d-flex align-items-center justify-content-center">
-                    <img src={pokemon.sprite} alt="Picture" style={{ width: '100%', maxWidth: '400px' }} className="rounded mt-3" />
+                    <img src={pokemon.sprite} alt="Picture" style={{ width: '100%', maxWidth: '360px' }} className="rounded mt-3" />
                 </Col>
                 <Col md='6' className="p-3 d-flex flex-column md-align-items-center">
                     <h3 className="text-center">Details</h3>
@@ -42,7 +45,7 @@ export const DetailsView = () => {
                         </div>
                     </div>
                     <Link to="/">
-                        <Button>Back</Button>
+                        <Button className="px-4">Back</Button>
                     </Link>
                 </Col>
             </Row>

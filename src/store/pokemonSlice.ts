@@ -69,6 +69,7 @@ export const pokemonSlice = createSlice({
 export const selectPokemonList = (state: RootState) => state.pokemon.pokemonList;
 export const selectPokemonById = (id: number) => (state: RootState) => state.pokemon.pokemonList.filter(item => item.id === id)[0];
 export const selectRequestStatus = (state: RootState) => state.pokemon.status;
+export const selectTypes = (state: RootState) => state.pokemon.pokemonTypes;
 export const selectConfig = (state: RootState) => state.pokemon.config;
 
 export default pokemonSlice.reducer;

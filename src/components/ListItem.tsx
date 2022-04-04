@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import { Link, Router } from "react-router-dom";
-import { PokemonModel } from "../../types/pokemonTypes";
+import { PokemonModel } from "../types/pokemonTypes";
 
 interface propType {
     data: PokemonModel;
@@ -13,8 +13,8 @@ export const ListItem = (props: propType) => {
     return (
         <Container>
             <Row className="border my-2 p-2 rounded-3 bg-light shadow" >
-                <Col md='3' className="d-flex align-items-center justify-content-center">
-                    <img src={data.sprite} alt="Picture" width={'180px'} className="rounded-3"/>
+                <Col md='3' className="d-flex align-items-center justify-content-center" style={{height: '180px', textAlign: 'center'}}>
+                    <img src={data.sprite} alt="Missing picture" width={'180px'} className="rounded-3"/>
                 </Col >
                 <Col md='3' className="d-flex align-items-center justify-content-center">
                     <Container className="d-flex flex-column align-items-center my-2">

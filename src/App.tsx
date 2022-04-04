@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { Header } from './components/header/Header';
-import DetailsView from './containers/details-view/DetailsView';
-import ListView from './containers/list-view/ListView';
+import { Header } from './components/Header';
+import DetailsView from './containers/DetailsView';
+import ListView from './containers/ListView';
 
 function App() {
   return (

@@ -6,7 +6,7 @@ import ListView from './containers/list-view/ListView';
 
 function App() {
   return (
-    <div className="App">
+    <div className="App bg-secondary">
       <Header></Header>
       <BrowserRouter>
         <Routes>

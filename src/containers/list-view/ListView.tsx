@@ -1,4 +1,6 @@
 import { useEffect } from "react";
+import { Button, Col, Row } from "react-bootstrap";
+import Container from "react-bootstrap/Container";
 import { getTypes } from "../../api/wrappers";
 import { ListItem } from "../../components/list-item/listItem";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
@@ -12,22 +14,21 @@ export const ListView = () => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        dispatch(loadListAsync({mode: DisplayMode.Name, query: 'butter', size: config.size}));
+        dispatch(loadListAsync({ mode: DisplayMode.Name, query: 'pi', size: config.size }));
     }, []);
 
 
     const handleLoadMore = () => {
-        dispatch(loadListAsync({...config, size: config.size+10}));
+        dispatch(loadListAsync({ ...config, size: config.size + 10 }));
     }
 
     const items = list.map(data => <ListItem data={data} key={data.id} />);
 
     return (
-        <div>
-            <h3>ListView</h3>
+        <Container fluid='md d-flex flex-column'>
             {items}
-            <button onClick={handleLoadMore}>Load more</button>
-        </div>
+            <Button onClick={handleLoadMore} variant='primary' className="my-3">Load more</Button>
+        </Container>
     );
 }
 

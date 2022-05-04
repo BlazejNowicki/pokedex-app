@@ -7,7 +7,7 @@ import ListView from './containers/ListView';
 function App() {
   return (
     <div className="App bg-secondary">
-      <Header></Header>
+      <Header/>
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<ListView />}></Route>

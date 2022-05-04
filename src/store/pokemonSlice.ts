@@ -38,12 +38,20 @@ export const loadListAsync = createAsyncThunk(
                 break;
         }
         const response = await Promise.all(indexes.map(index => getPokemonById(index)));
-        return {config, list: response.map(item => mapApiModel(item.data as PokemonApiModel))}
+        return { config, list: response.map(item => mapApiModel(item.data as PokemonApiModel)) }
+    }
+)
+
+export const loadById = createAsyncThunk(
+    'pokemon/loadById',
+    async (id: number) => {
+        const response = await getPokemonById(id);
+        return mapApiModel(response.data as PokemonApiModel);
     }
 )
 
 export const loadTypesAsync = createAsyncThunk(
-    'pokemon/loadTypes', 
+    'pokemon/loadTypes',
     getTypes
 )
 
@@ -62,12 +70,19 @@ export const pokemonSlice = createSlice({
             state.status = RequestStatus.rejected;
         }).addCase(loadTypesAsync.fulfilled, (state, action) => {
             state.pokemonTypes = action.payload;
+        }).addCase(loadById.rejected, (state, action) => {
+            state.status = RequestStatus.rejected;
+        }).addCase(loadById.pending, (state, action) => {
+            state.status = RequestStatus.pending;
+        }).addCase(loadById.fulfilled, (state, action) => {
+            state.pokemonList.push(action.payload);
+            state.status = RequestStatus.fulfilled;
         });
     }
 })
 
 export const selectPokemonList = (state: RootState) => state.pokemon.pokemonList;
-export const selectPokemonById = (id: number) => (state: RootState) => state.pokemon.pokemonList.filter(item => item.id === id)[0];
+export const selectPokemonById = (id: number) => (state: RootState) => state.pokemon.pokemonList.find(item => item.id === id);
 export const selectRequestStatus = (state: RootState) => state.pokemon.status;
 export const selectTypes = (state: RootState) => state.pokemon.pokemonTypes;
 export const selectConfig = (state: RootState) => state.pokemon.config;

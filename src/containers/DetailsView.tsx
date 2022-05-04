@@ -1,14 +1,32 @@
+import { useEffect } from "react";
 import Button from "react-bootstrap/Button"
 import Col from "react-bootstrap/Col"
 import Container from "react-bootstrap/Container"
 import Row from "react-bootstrap/Row"
 import { Link, useParams } from "react-router-dom";
-import { useAppSelector } from "../store/hooks";
-import { selectPokemonById } from "../store/pokemonSlice";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { loadById, selectPokemonById, selectRequestStatus } from "../store/pokemonSlice";
+import { RequestStatus } from "../types/displayTypes";
 
 export const DetailsView = () => {
     let params = useParams();
     let pokemon = useAppSelector(selectPokemonById(params.id ? parseInt(params.id) : 1));
+    const status = useAppSelector(selectRequestStatus);
+    const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        if (!pokemon)
+            dispatch(loadById(params.id ? parseInt(params.id) : 1));
+    }, []);
+
+    if (status === RequestStatus.pending)
+        return <div>Loading</div>
+
+    if (status === RequestStatus.rejected)
+        return <div>Error</div>
+
+    if (!pokemon)
+        return <div>Data not found</div>
 
     return (
         <Container className="bg-light p-3 rounded-3 shadow-lg">
